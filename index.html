@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="Imagenes/imagen1.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript - Gestion de productos.</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+     <h1><span class="amarillo">JavaScript</span> - Programación Funcional.</h1>
+    <p>
+        En la programación funcional, las funciones son el centro del diseño: se trabaja con datos que NO se modifican <code class="gris">inmutabilidad</code> y cada función recibe datos, produce un resultado y no tiene efectos secundarios (funciones puras).
+    </p>
+    <h2>Fundamentos Teóricos.</h2>
+    <h3>¿Qué es la Programación Funcional?</h3>
+    <p>
+        La programación funcional <code class="gris">(PF)</code> es un paradigma donde los programas se construyen aplicando y componiendo funciones. A diferencia del paradigma imperativo, en <code class="gris">PF</code> no se describe <b>CÓMO</b> hacer algo paso a paso, sino <b>QUÉ</b> transformaciones deben ocurrir sobre sobre los datos.
+    </p>
+    <center>
+    <table>
+        <thead>
+            <tr>
+                <th>Concepto</th>
+                <th>Paradigma Imperativo</th>
+                <th>Paradigma Funcional</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Estado</td>
+                <td>Se modifica directamente</td>
+                <td>No se modifica <code class="gris">(inmutable)</code></td>
+            </tr>
+            <tr>
+                <td>Bucles</td>
+                <td><code>for</code>, <code>while</code> explícitos</td>
+                <td><code>map</code>, <code>filter</code>, <code>reduce</code></td>
+            </tr>
+            <tr>
+                <td>Funciones</td>
+                <td>Procedimientos con efectos</td>
+                <td>Funciones puras sin efecto</td>
+            </tr>
+            <tr>
+                <td>Foco</td>
+                <td>Cómo ejecutar pasos</td>
+                <td>Qué transformar</td>
+            </tr>
+            <tr>
+                <td>Datos</td>
+                <td>Variables reasignables</td>
+                <td>Constantes y nuevas copias</td>
+            </tr>
+        </tbody>
+    </table>
+    </center>
+    <h3>Principios Clave: Funciones Puras.</h3>
+    <p>
+        Una función pura siempre retorna el mismo resultado para los mismos argumentos y no modifica nada fuera de su scope (sin efectos secundarios).
+    </p>
+    <p>
+        <i>
+            En una función pura, el scope es el ámbito interno donde la función trabaja con sus propios datos y argumentos. Esto significa que todas las operaciones se realizan dentro de ese espacio definido, sin acceder ni modificar variables externas.
+        </i>
+    </p>
+    <h4>Ejemplo de Función Impura.</h4>
+    <p>
+        Modifica una variable externa y genera un efecto secundario
+    </p>
+<pre><code class="cpp"> <span class="gris">// Suma básica.</span>
+    <span class="rojo">const</span> <span class="violeta">sumar</span> <span class="celeste">=</span> (a, b) <span class="celeste">=></span> a <span class="celeste">+</span> b;
+    <span class="gris">// Cálculo de descuento.</span>
+    <span class="rojo">const</span> <span class="violeta">aplicarDescuento</span> <span class="celeste">=</span> (precio, pct) <span class="celeste">=></span> precio <span class="celeste">*</span> (<span class="celeste">1 - </span> pct <span class="celeste">/ 100</span>);</code></pre>
+    
+    <h3>Principios Clave: Inmutabilidad.</h3>
+    <p>
+        Los datos originales nunca se modifican. Toda transformación produce un nuevo valor.
+    </p>
+
+    <h4>Ejemplo de Práctica Incorrecta (Mutación)</h4>
+    <p>
+        Modifica el array origiral directamente de forma destructiva.
+    </p>
+<pre><code class="cpp"> <span class="rojo">const</span> albumes <span class="celeste">=</span> [<span class="celeste">'Abbey Road'</span>, <span class="celeste">'Thriller'</span>];
+  albumes.<span class="violeta">push</span>(<span class="celeste">'Dark Side of the Moon'</span>); <span class="gris">// ¡Mutación! </span></code></pre>
+
+    <h4>Ejemplo de Práctica Correcta (Inmutabilidad).</h4>
+    <p>
+        Crea un nuevo array combinando los datos anteriores sin alterar el original.
+    </p>
+<pre><code class="cpp"> <span class="rojo">const</span> albumes <span class="celeste">=</span> [<span class="celeste">'Abbey Road', <span class="celeste">'Thriller'</span>];
+<span class="gris">// El operador spread (...) crea una copia con el nuevo elemento.</span>
+    <span class="rojo">const</span> albumesActualizado <span class="celeste">=</span> [...albumes, <span class="celeste">'Dark Side of the Moon'</span>];
+    <span class="gris">// 'albumes' original no cambió.</span></code></pre>
+
+    <h3>Principios Clave: Funciones como Valores <code class="gris">(First-Class Functions)</code></h3>
+    <p>
+        En <span class="amarillo">JavaScript</span> las funciones son valores de primera clase: pueden guardarse en variables, pasarse como argumentos y retornarse desde otras funciones.
+    </p>
+    <b>Guardar función en una variable</b>
+<pre><code class="cpp"> <span class="rojo">const</span> <span class="violeta">saludar</span> <span class="celeste">=</span> (nombre) <span class="celeste">=> 'hola, ' +</span>nombre;</code></pre>
+
+    <b>Pasar función como argumento (Callback).</b><br>
+<pre><code class="cpp"> <span class="rojo">const</span> nombres <span class="celeste">=</span> [ <span class="celeste">'Ana'</span>, <span class="celeste">'Luis'</span>, <span class="celeste">'Marta'</span>];
+
+    <span class="gris">// map recibe la función 'saludar' y la aplica a cada elemento.
+    <span class="rojo">const</span> saludos <span class="celeste">=</span> nombre.<span class="violeta">map</span>(saludar);
+    <span class="gris">// Resultado: ['Hola, Ana', 'Hola, Luis', 'Hola. Marta']</span></code></pre>
+    <br>
+    <b>Retornar función desde otra función (Higher-Order Function)</b>
+<pre><code class="cpp"> <span class="gris">// Una función que fabrica y retorna una nueva función</span>
+    <span class="rojo">const</span> <span class="violeta">multiplicarPor</span> <span class="celeste">=</span> (factor) <span class="celeste">=></span> (n) <span class="celeste">=></span> n <span class="celeste">*</span> factor;
+
+    <span class="rojo">const</span> doble <span class="celeste">=</span> <span class="violeta">multiplicarPor</span>(<span class="celeste">2</span>); <span class="gris"> // 'doble' ahora es una función que multiplica por 2</span>
+    console.<span class="violeta">log</span>(doble(<span class="celeste">5</span>)); <span class="gris">// Resultado: 10</span></code></pre>
+
+    <h3>Métodos Funcionales de Arrays en <span class="amarillo">JavaScript</span></h3>
+    <p>
+        <span class="amarillo">JavaScript</span> incluye métodos fundamentales que son el corazón de la Programación Funcional <code class="gris">(PF)</code> al trabajar con colecciones de datos. Todos ellos generan nuevos resultados sin mutar el array original.
+    </p>
+    <b>Tabla Comparativa de Métodos.</b>
+    <table>
+        <thead>
+            <tr>
+                <td>Método</td><td>¿Qué hace?</td><td>Ejemplo de uso en el proyecto</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code class="gris">.map(fn)</code></td>
+                <td>Transforma cada elemento y retorna un nuevo array del mismo tamaño.</td>
+                <td>Aplicar descuento a cada precio.</td>
+            </tr>
+            <tr>
+                <td><code class="gris">.filter(fn)</code></td>
+                <td>Retorna un nuevo array sólo con los elementos que cumplan la condición.</td>
+                <td>Filtrar álbumes por género</td>
+            </tr>
+            <tr>
+                <td><code class="gris">.recude(fn, val)</code></td>
+                <td>Acumula todos los elementos en un único valor final.</td>
+                <td>Calcular total del carrito.</td>
+            </tr>
+            <tr>
+                <td><code class="gris">.find(fn)</code></td>
+                <td>Retorna el primer elemento que cumple la condición.</td>
+                <td>Buscar álbum por ID.</td>
+            </tr>
+            <tr>
+                <td><code class="gris">.every(fn)</code>/<code class="gris">.some(fn)</code></td>
+                <td>Verifica si todos o algún elemento cumplen la condición.</td>
+                <td>Validar disponibilidad de stock</td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <hr>
+    <br>
+    
+</body>
+</html>
