@@ -1,1 +1,0 @@
-# JavaScript---Programacion-funcional
